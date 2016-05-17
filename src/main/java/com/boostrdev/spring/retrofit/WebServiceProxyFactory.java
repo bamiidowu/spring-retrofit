@@ -20,15 +20,18 @@ public final class WebServiceProxyFactory {
 
     /**
      * Create an implementation of the API endpoints defined by the {@code webServiceProxy} interface.
+     * <p>
+     * Create an implementation of the API endpoints defined by the {@code webServiceProxy} interface.
      *
-     * @param webServiceProxyClazz
-     * @param converter
-     * @param baseUrl
-     * @param proxyHost
-     * @param proxyPort
-     * @param proxy
-     * @param logging
-     * @return
+     * @param <T>                  The web proxy interface type
+     * @param webServiceProxyClazz The web proxy interface class
+     * @param converter            The JSON converterFactory
+     * @param baseUrl              The base location of the web service
+     * @param proxyHost            The host name of the HTTP proxy
+     * @param proxyPort            The port number of the HTTP proxy
+     * @param proxy                Whether a HTTP proxy should be used to send HTTP requests and responses
+     * @param logging              Whether the HTTP logging should be turned on
+     * @return Returns a Retrofit instance of the web service proxy using
      */
     public static <T> T create(Class<T> webServiceProxyClazz, Converter converter, String baseUrl, String proxyHost, int proxyPort, boolean proxy, boolean logging) {
         RestAdapter.Builder restAdapterBuilder = new RestAdapter.Builder();
