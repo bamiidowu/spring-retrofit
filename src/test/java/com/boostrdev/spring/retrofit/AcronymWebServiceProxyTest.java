@@ -36,7 +36,8 @@ public class AcronymWebServiceProxyTest {
 
     @Test
     public void testGetAcronymResultsAsynchronously() throws Exception {
-        final CountDownLatch lock = new CountDownLatch(1);
+
+        final CountDownLatch callbackLatch = new CountDownLatch(1);
 
         acronymWebServiceProxy.getAcronymResultsAsynchronously("HMM", new Callback<List<AcronymData>>() {
             public void success(List<AcronymData> acronymDataList, Response response) {
@@ -46,7 +47,7 @@ public class AcronymWebServiceProxyTest {
                 } else {
                     fail("Received a bad response");
                 }
-                lock.countDown();
+                callbackLatch.countDown();
             }
 
             public void failure(RetrofitError retrofitError) {
@@ -54,10 +55,10 @@ public class AcronymWebServiceProxyTest {
             }
         });
 
-        lock.await(2000, TimeUnit.MILLISECONDS);
+        callbackLatch.await(2000, TimeUnit.MILLISECONDS);
     }
 
-    public void verifyResponse(List<AcronymData> acronymDataList) {
+    private void verifyResponse(List<AcronymData> acronymDataList) {
 
         // Check the body isn't empty
         assertNotNull(acronymDataList);
