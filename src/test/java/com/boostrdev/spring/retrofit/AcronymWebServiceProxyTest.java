@@ -30,15 +30,18 @@ public class AcronymWebServiceProxyTest {
 
     @Test
     public void testGetAcronymResultsSynchronously() {
-        List<AcronymData> acronymDatas = acronymWebServiceProxy.getAcronymResultsSynchronously("HMM");
-        verifyResponse(acronymDatas);
+        // Execute the call synchronously
+        List<AcronymData> acronymDataList = acronymWebServiceProxy.getAcronymResultsSynchronously("HMM");
+        verifyResponse(acronymDataList);
     }
 
     @Test
     public void testGetAcronymResultsAsynchronously() throws Exception {
 
+        // The count down latch allows the main thread to be notified once the callback has been executed
         final CountDownLatch callbackLatch = new CountDownLatch(1);
 
+        // Execute the call asynchronously
         acronymWebServiceProxy.getAcronymResultsAsynchronously("HMM", new Callback<List<AcronymData>>() {
             public void success(List<AcronymData> acronymDataList, Response response) {
                 // Request is successful if response code begins with 2XX
@@ -47,6 +50,7 @@ public class AcronymWebServiceProxyTest {
                 } else {
                     fail("Received a bad response");
                 }
+                // Notify the main thread
                 callbackLatch.countDown();
             }
 
