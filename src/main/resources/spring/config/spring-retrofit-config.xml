@@ -10,7 +10,7 @@
     <context:property-placeholder location="classpath:spring/properties/application.properties"/>
 
     <bean id="proxyFactory" class="com.boostrdev.spring.retrofit.WebServiceProxyFactory" factory-method="create">
-        <constructor-arg name="webServiceProxyClazz" type="java.lang.Class"
+        <constructor-arg name="webServiceProxyClazz"
                          value="com.boostrdev.spring.retrofit.AcronymWebServiceProxy"/>
         <constructor-arg name="baseUrl" value="${acronym.base.url}"/>
         <constructor-arg name="logging" value="${acronym.http.logging}"/>
@@ -23,7 +23,7 @@
     <bean id="gsonConverter" class="retrofit.converter.GsonConverter">
         <constructor-arg name="gson" ref="gson"/>
     </bean>
-    
+
     <bean id="gson" class="com.google.gson.Gson"/>
 
 
